@@ -1,13 +1,18 @@
-import React from "react";
+import React , { useContext } from "react";
 import "./List.css";
 import ListItem from "./ListItem";
+import AppContext from "../context/AppContext";
 
-const List = (props) => {
+
+const List = () => {
+    
+    const context = useContext(AppContext);
+
     return (
         <>
             <div id="list-section">
                 <ul id="job-list">
-                    <ListItem jobsArray={props.jobsArray} setJobsArray={props.setJobsArray} />
+                    <ListItem jobsArray={context.jobsArray} setJobsArray={context.setJobsArray} />
                 </ul>
             </div>
         </>

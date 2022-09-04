@@ -2,6 +2,7 @@ import React , { useState } from "react";
 import "./App.css"
 import Form from "./Form";
 import List from "./List";
+import AppContext from "../context/AppContext";
 
 const App = () => {
 
@@ -11,8 +12,13 @@ const App = () => {
 
     return (
         <div id="app">
-            <Form jobsArray={jobsArray} setJobsArray={setJobsArray}/>
-            <List jobsArray={jobsArray} setJobsArray={setJobsArray}/>
+            <AppContext.Provider value={{
+                jobsArray ,
+                setJobsArray
+            }}>
+                <Form />
+                <List />
+            </AppContext.Provider>
         </div>
     );
 }

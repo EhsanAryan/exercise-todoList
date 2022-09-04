@@ -1,9 +1,14 @@
-import React from "react";
+import React , { useContext } from "react";
 import ReactDOM from "react-dom";
 import "./ListItem.css";
+import AppContext from "../context/AppContext";
 
-const ListItem = (props) => {
+const ListItem = () => {
 
+    const context = useContext(AppContext);
+
+
+    // Event Handlers
     const completeJob = (event) => {
         const liArray = [...document.querySelectorAll(".list-item")];
         const currentLi = event.target.parentNode.parentNode;
@@ -19,7 +24,7 @@ const ListItem = (props) => {
 
         let allJobs = JSON.parse(localStorage.getItem("jobs"));
         allJobs[selectedIndex].isCompleted = !allJobs[selectedIndex].isCompleted;
-        props.setJobsArray(allJobs);
+        context.setJobsArray(allJobs);
         localStorage.setItem("jobs" , JSON.stringify(allJobs));
     }
 
@@ -31,7 +36,7 @@ const ListItem = (props) => {
         
         let allJobs = JSON.parse(localStorage.getItem("jobs"));
         allJobs.splice(selectedIndex , 1);
-        props.setJobsArray(allJobs);
+        context.setJobsArray(allJobs);
         localStorage.setItem("jobs" , JSON.stringify(allJobs));
     }
 
@@ -69,34 +74,40 @@ const ListItem = (props) => {
         let allJobs = JSON.parse(localStorage.getItem("jobs"));
         const draggedJob = allJobs.splice(draggedIndex , 1)[0];
         allJobs.splice(dropIndex , 0 , draggedJob);
-        props.setJobsArray(allJobs);
+        context.setJobsArray(allJobs);
         localStorage.setItem("jobs" , JSON.stringify(allJobs));
     }
 
-
-    return (
-        <>
-            {props.jobsArray.map(job => {
-                return (
-                    <li className={`list-item ${job.isCompleted ? "green-item" : "blue-item"}`} key={Math.random()}
-                    draggable="true" onDragStart={handleDragStart} onDragEnd={handleDragEnd}
-                    onDragOver={handleDragOver} onDrop={handleDrop}>
-                        <span id="job-span">
-                            {job.name}
-                        </span>
-                        <span id="detail-span">
-                            <span id="complete-span" onClick={completeJob}>
-                                {job.isCompleted ? "✕" : "✓"}
+    
+    
+    if(context.jobsArray.length>0){
+        return (
+            <>
+                {context.jobsArray.map(job => {
+                    return (
+                        <li className={`list-item ${job.isCompleted ? "green-item" : "blue-item"}`} key={Math.random()}
+                        draggable="true" onDragStart={handleDragStart} onDragEnd={handleDragEnd}
+                        onDragOver={handleDragOver} onDrop={handleDrop}>
+                            <span id="job-span">
+                                {job.name}
                             </span>
-                            <span id="delete-span" onClick={deleteJob}>
-                                ⌧
+                            <span id="detail-span">
+                                <span id="complete-span" onClick={completeJob}>
+                                    {job.isCompleted ? "✕" : "✓"}
+                                </span>
+                                <span id="delete-span" onClick={deleteJob}>
+                                    ⌧
+                                </span>
                             </span>
-                        </span>
-                    </li>
-                );
-            })}
-        </>
-    );
+                        </li>
+                    );
+                })}
+            </>
+        );
+    }
+    else {
+        return <li className="empty">Nothing to show...</li>
+    }
 }
 
 export default ListItem;

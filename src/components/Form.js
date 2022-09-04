@@ -1,11 +1,16 @@
-import React , { useState } from "react";
+import React , { useState , useContext} from "react";
 import "./Form.css";
+import AppContext from "../context/AppContext";
 
 
-const Form = (props) => {
+const Form = () => {
 
     const [job , setJob] = useState("");
 
+    const context = useContext(AppContext);
+
+    
+    // Event Handlers
     const changeJobFiled = (event) => {
         setJob(event.target.value);
     }
@@ -17,8 +22,8 @@ const Form = (props) => {
         }
         else {
             const newJob = {name: job , isCompleted: false};
-            props.setJobsArray([...props.jobsArray , newJob]);
-            localStorage.setItem("jobs" , JSON.stringify([...props.jobsArray , newJob]));
+            context.setJobsArray([...context.jobsArray , newJob]);
+            localStorage.setItem("jobs" , JSON.stringify([...context.jobsArray , newJob]));
 
             setJob("");
         }
@@ -30,6 +35,7 @@ const Form = (props) => {
         }
     }
 
+
     return (
         <div id="job-form">
             <input type="text" id="job-input" placeholder="Job..." value={job}
@@ -39,4 +45,4 @@ const Form = (props) => {
     );
 }
 
-export default Form
+export default Form;
