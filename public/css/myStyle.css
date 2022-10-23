@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'BYekan';
+    src: url('../Fonts/BYekan/BYekan-webfont.eot') format('eot') , 
+    url('../Fonts/BYekan/BYekan-webfont.ttf') format('truetype') ,
+    url('../Fonts/BYekan/BYekan-webfont.woff') format('woff');
+}
+
+* {
+    font-family: 'BYekan';
+}
+
+body {
+    direction: rtl;
+    background: linear-gradient(rgb(0, 116, 116) 20% , rgb(8, 147, 147) 50% , rgb(1, 195, 244) 80%);
+}
