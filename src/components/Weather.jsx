@@ -44,6 +44,7 @@ const Weather = () => {
     }
 
     const getWeatherLatLon = () => {
+        const numberPattern = /^\d+(\.\d+)?$/;
         if(lat==="" || lon==="") {
             swal({
                 title: "خطا" ,
@@ -51,6 +52,14 @@ const Weather = () => {
                 icon : "error" ,
                 button : "متوجه شدم"
             })
+            return;
+        } else if(!numberPattern.test(lat) || !numberPattern.test(lon)){
+            swal({
+                title: "خطا" ,
+                text : "لطفا در فیلدها، فقط عدد وارد کنید!" ,
+                icon: "error" ,
+                button: "متوجه شدم"
+            });
             return;
         }
         
